@@ -1,7 +1,7 @@
 ﻿
 namespace CapitalPlacement.Assessment.Model.Entities
 {
-    public class ApplicationForm
+    public class ApplicationForm : BaseEntity
     {
         public string ImageUrl { get; set; }
         public PersonalInfo personalInfo { get; set; }

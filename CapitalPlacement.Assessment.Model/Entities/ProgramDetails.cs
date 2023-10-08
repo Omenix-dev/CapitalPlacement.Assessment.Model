@@ -9,11 +9,6 @@ namespace CapitalPlacement.Assessment.Model.Entities
         public List<string> Skills { get; set; }
         public string ProgramBenefit { get; set; }
         public string ApplicationCriteria { get; set; }
-        public AdditionalProgramInfo AdditionalProgramInfo { get; set; }
-    }
-
-    public class AdditionalProgramInfo
-    {
         public string ProgramType { get; set; }
         public DateTime ProgramStart { get; set; }
         public DateTime ApplicationOpen { get; set; }
