@@ -1,4 +1,6 @@
 ﻿
+using CapitalPlacement.Assessment.Model.Enum;
+
 namespace CapitalPlacement.Assessment.Model.Entities
 {
     public class WorkFlow
