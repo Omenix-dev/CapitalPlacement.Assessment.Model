@@ -11,6 +11,7 @@ namespace CapitalPlacement.Assessment.API.Extension
             services.AddSingleton<CosmosClient>(provider =>
             {
                 string connectionString = config.GetSection("AzureCosmosDBSetting").GetValue<string>("ConnectionString");
+                string database = config.GetSection("AzureCosmosDBSetting").GetValue<string>("ConnectionString");
                 CosmosClient cosmosClient = new CosmosClient(connectionString);
                 return cosmosClient;
             });

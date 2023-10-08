@@ -1,12 +1,14 @@
 ﻿
 
+using CapitalPlacement.Assessment.Model.Dto;
+
 namespace CapitalPlacement.Assessment.DataAccess.Interfaces
 {
     public interface IProgramService
     {
-        void GetAllProgram();
-        void GetById(string id);
-        void AddProgram(string value);
-        void UpdateProgram(string id, string value);
+        public Task<ResponseDto<List<ProgramRequestDto>>> GetAllProgram();
+        public Task<ResponseDto<ProgramRequestDto>> GetById(string id);
+        public Task<ResponseDto<bool>> AddProgram(ProgramRequestDto programObject);
+        public Task<ResponseDto<bool>> UpdateProgram(string id, ProgramRequestDto value);
     }
 }

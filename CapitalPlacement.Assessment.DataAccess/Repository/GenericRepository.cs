@@ -12,14 +12,21 @@ namespace CapitalPlacement.Assessment.DataAccess.Repository
     public class GenericRepository<TDocument> : IGenericRepository<TDocument> where TDocument : BaseEntity
     {
         private readonly Container _collection;
+        private readonly CosmosClient _client;
+        private readonly string _containername;
+        private readonly string _databaseName;
 
         public GenericRepository(CosmosClient cosmosClient, string databaseName, string containerName)
         {
             _collection = cosmosClient.GetContainer(databaseName, containerName);
+            _client = cosmosClient;
+            _databaseName = databaseName;
+            _containername = containerName;
         }
 
         public async Task<IEnumerable<TDocument>> GetAllAsync()
         {
+            await _client.GetDatabase(_databaseName).CreateContainerIfNotExistsAsync(_containername, "/program");
             var query = _collection.GetItemQueryIterator<TDocument>
             (new QueryDefinition("SELECT * FROM c"));
             List<TDocument> results = new List<TDocument>();
@@ -33,24 +40,30 @@ namespace CapitalPlacement.Assessment.DataAccess.Repository
 
         public async Task<TDocument> GetByIdAsync(string id)
         {
-            var value = await _collection.ReadItemAsync<TDocument>(id, new PartitionKey(id));
+            await _client.GetDatabase(_databaseName).CreateContainerIfNotExistsAsync(_containername, "/program");
+            var value = await _collection.ReadItemAsync<TDocument>(id, new PartitionKey("program"));
             return value.Resource;
         }
 
         public async Task<TDocument> InsertAsync(TDocument document)
         {
-            var item = await _collection.CreateItemAsync<TDocument>(document, new PartitionKey(document.Id));
+
+            await _client.GetDatabase(_databaseName).CreateContainerIfNotExistsAsync(_containername,"/program");
+            var item = await _collection.CreateItemAsync<TDocument>(document);
             return item;
         }
 
         public async Task<TDocument> UpdateAsync(string id, TDocument document)
         {
-            var item = await _collection.UpsertItemAsync<TDocument>(document, new PartitionKey(document.Id));
+            await _client.GetDatabase(_databaseName).CreateContainerIfNotExistsAsync(_containername, "/program");
+            document.id = id;
+            var item = await _collection.ReplaceItemAsync<TDocument>(document, id);
             return item;
         }
 
         public async Task DeleteAsync(string id, string partition)
         {
+            await _client.GetDatabase(_databaseName).CreateContainerIfNotExistsAsync(_containername, "/program");
             await _collection.DeleteItemAsync<TDocument>(id, new PartitionKey(partition));
         }
     }
