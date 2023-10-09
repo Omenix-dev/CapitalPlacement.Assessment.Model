@@ -9,6 +9,8 @@ namespace CapitalPlacement.Assessment.DataAccess.Utility
         public Profiler()
         {
            CreateMap<ProgramRequestDto, ProgramDetails>().ReverseMap();
+           CreateMap<PreviewDto, ProgramDetails>().ReverseMap();
+           CreateMap<WorkFlow, WorkFlowRequestDto>().ReverseMap();
         }
     }
 }

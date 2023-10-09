@@ -5,6 +5,7 @@ namespace CapitalPlacement.Assessment.Model.Dto
 {
     public class ProgramRequestDto
     {
+        public string id { get; set; }
         public string ProgramTitle { get; set; }
         public string ProgramSummary { get; set; }
         public string ProgramDescription { get; set; }

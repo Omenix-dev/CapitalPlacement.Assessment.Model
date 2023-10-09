@@ -72,7 +72,25 @@ namespace CapitalPlacement.Assessment.DataAccess.Services
                 var response =( await _unitOfWork.ProgramDetailsRepository.GetAllAsync()).FirstOrDefault(x=>x.id == id);
                 var programDetails = _mapper.Map<ProgramRequestDto>(response);
                 _logger.Information("successfully retrived the data with the Id " + id);
-                return ResponseDto<ProgramRequestDto>.Success("successfully inserted", programDetails, (int)HttpStatusCode.OK);
+                return ResponseDto<ProgramRequestDto>.Success("successfully retrieved", programDetails, (int)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                _logger.Error(ex.StackTrace);
+                return ResponseDto<ProgramRequestDto>.Fail("somthing went wrong contact admin", (int)HttpStatusCode.BadRequest);
+            }
+        }
+
+        public async Task<ResponseDto<ProgramRequestDto>> Preview(string id)
+        {
+            try{
+                _logger.Information("previewing the program with the Id "+ id);
+                //var response = await _unitOfWork.ProgramDetailsRepository.GetByIdAsync(id);
+                var response = (await _unitOfWork.ProgramDetailsRepository.GetAllAsync()).FirstOrDefault(x => x.id == id);
+                var programDetails = _mapper.Map<ProgramRequestDto>(response);
+                _logger.Information("successfully retrived the data with the Id " + id);
+                return ResponseDto<ProgramRequestDto>.Success("successfully retrieved", programDetails, (int)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

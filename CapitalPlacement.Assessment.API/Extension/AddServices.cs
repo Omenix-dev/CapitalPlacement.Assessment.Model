@@ -1,6 +1,7 @@
 ﻿using CapitalPlacement.Assessment.DataAccess.Interfaces;
 using CapitalPlacement.Assessment.DataAccess.Services;
 using CapitalPlacement.Assessment.DataAccess.Utility;
+using CapitalPlacement.Assessment.Model.Entities;
 using SpredMedia.Catalogue.Infrastructure.Repository;
 
 namespace CapitalPlacement.Assessment.API.Extension
@@ -14,6 +15,7 @@ namespace CapitalPlacement.Assessment.API.Extension
             services.AddAutoMapper(typeof(Profiler));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProgramService, ProgramServices>();
+            services.AddScoped<IWorkFlow, WorkFlowServices>();
         }
     }
 }
