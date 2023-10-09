@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CapitalPlacement.Assessment.DataAccess.Interfaces;
+using CapitalPlacement.Assessment.DataAccess.Services;
+using CapitalPlacement.Assessment.Model.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapitalPlacement.Assessment.API.Controllers
 {
@@ -6,31 +9,39 @@ namespace CapitalPlacement.Assessment.API.Controllers
     [ApiController]
     public class ApplicationFormController : ControllerBase
     {
+        private readonly IApplicants _applicantService;
+        public ApplicationFormController(IApplicants applicantService)
+        {
+            _applicantService = applicantService;
+        }
 
         [HttpGet("get-all-applicants")]
-        public IActionResult GetAllApplicants()
+        public async Task<IActionResult> GetAllApplicants()
         {
-            return Ok();
+            var resp = await _applicantService.GetAllApplicants();
+            return StatusCode(resp.StatusCode, resp);
         }
 
         [HttpGet("get-applicant/{id}")]
-        public IActionResult GetApplicantById(string id)
+        public async Task<IActionResult> GetApplicantById([FromRoute]string id)
         {
-            return Ok();
+            var resp = await _applicantService.GetById(id);
+            return StatusCode(resp.StatusCode, resp);
         }
 
         
         [HttpPost("register-applicant")]
-        public IActionResult RegisterApplicant([FromBody] string value)
+        public async Task<IActionResult> RegisterApplicant([FromBody] ApplicantRequestDto value)
         {
-            return BadRequest();
+            var resp = await _applicantService.RegisterApplicant(value);
+            return StatusCode(resp.StatusCode, resp);
         }
 
-        // PUT api/<ProgramDetailController>/5
         [HttpPut("update-applicant/{id}")]
-        public IActionResult UpdateApplicant([FromRoute]string id, [FromBody] string value)
+        public async Task<IActionResult> UpdateApplicant([FromRoute]string id, [FromBody] ApplicantRequestDto value)
         {
-            return BadRequest();
+            var resp = await _applicantService.UpdateApplicant(id, value);
+            return StatusCode(resp.StatusCode, resp);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace CapitalPlacement.Assessment.API.Extension
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProgramService, ProgramServices>();
             services.AddScoped<IWorkFlow, WorkFlowServices>();
+            services.AddScoped<IApplicants, ApplicantService>();
         }
     }
 }

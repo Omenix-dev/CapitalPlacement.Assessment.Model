@@ -11,6 +11,7 @@ namespace CapitalPlacement.Assessment.DataAccess.Utility
            CreateMap<ProgramRequestDto, ProgramDetails>().ReverseMap();
            CreateMap<PreviewDto, ProgramDetails>().ReverseMap();
            CreateMap<WorkFlow, WorkFlowRequestDto>().ReverseMap();
+           CreateMap<ApplicationForm, ApplicantRequestDto>().ReverseMap();
         }
     }
 }
